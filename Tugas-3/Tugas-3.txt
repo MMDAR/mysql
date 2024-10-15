@@ -1,0 +1,334 @@
+
+Setting environment for using XAMPP for Windows.
+Mamad@ASUS-MAMAD c:\xampp
+# cd mysql
+
+Mamad@ASUS-MAMAD c:\xampp\mysql
+# cd bin
+
+Mamad@ASUS-MAMAD c:\xampp\mysql\bin
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 54
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dbpossi02          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| sib17              |
+| test               |
++--------------------+
+7 rows in set (0.000 sec)
+
+MariaDB [(none)]> use dbpossi02
+Database changed
+MariaDB [dbpossi02]> show tables;
++----------------------------+
+| Tables_in_dbpossi02        |
++----------------------------+
+| jenis_produk               |
+| kartu                      |
+| pelanggan                  |
+| pembayaran                 |
+| pembelian                  |
+| pembelian_produk_vendor    |
+| pesanan                    |
+| pesanan_items              |
+| pesanan_pelanggan_kartu    |
+| produk                     |
+| produk_jenis_kartu_pesanan |
+| vendor                     |
++----------------------------+
+12 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]> select * from produk order by harga_jual desc;
++----+------+------------------+------------+------------+------+----------+-----------------+
+| id | kode | nama             | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+------------------+------------+------------+------+----------+-----------------+
+|  9 | LN01 | Notebook Lenovo  |    9000000 |   12000000 |    3 |        2 |               5 |
+|  8 | AC01 | Notebook Acer    |    8000000 |   10800000 |    1 |        2 |               5 |
+|  6 | PC01 | PC Desktop HP    |    7000000 |    9600000 |    3 |        2 |               5 |
+|  2 | TV02 | Televisi 40 inch |    5500000 |    7737600 |    5 |        2 |               1 |
+|  1 | TV01 | Televisi 21 inch |    3500000 |    5241600 | NULL |        2 |               1 |
+|  3 | K001 | Kulkas 2 pintu   |    3500000 |    4867200 |    0 |        2 |               1 |
+|  4 | M001 | Meja Makan       |     500000 |     660000 |    6 |        3 |               2 |
+|  5 | TK01 | Teh Kotak        |       3000 |       4235 |    0 |       10 |               4 |
+|  7 | TB01 | Teh Botol        |       2000 |       3025 |   39 |       10 |               4 |
++----+------+------------------+------------+------------+------+----------+-----------------+
+9 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]> select kode, nama, tmp_lahir, tgl_lahir from pelanggan;
++------+---------------+------------+------------+
+| kode | nama          | tmp_lahir  | tgl_lahir  |
++------+---------------+------------+------------+
+| C001 | Agung Sedayu  | Solo       | 2010-01-01 |
+| C002 | Pandan Wangi  | Yogyakarta | 1950-01-01 |
+| C003 | Sekar Mirah   | Kediri     | 1983-02-20 |
+| C004 | Swandaru Geni | Kediri     | 1981-01-04 |
+| C005 | Pradabashu    | Pati       | 1985-04-02 |
+| C006 | Gayatri Dwi   | Jakarta    | 1987-11-28 |
+| C007 | Dewi Gyat     | Jakarta    | 1988-12-01 |
+| C008 | Andre Haru    | Surabaya   | 1990-07-15 |
+| C009 | Ahmad Hasan   | Surabaya   | 1992-10-15 |
+| C010 | Cassanndra    | Belfast    | 1990-11-20 |
++------+---------------+------------+------------+
+10 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]> select kode, nama, stok from produk where stok=4;
+Empty set (0.000 sec)
+
+MariaDB [dbpossi02]> select * from pelanggan where tmp_lahir='jakarta';
++----+------+-------------+------+-----------+------------+------------------+----------+
+| id | kode | nama        | jk   | tmp_lahir | tgl_lahir  | email            | kartu_id |
++----+------+-------------+------+-----------+------------+------------------+----------+
+|  6 | C006 | Gayatri Dwi | P    | Jakarta   | 1987-11-28 | gaya87@gmail.com |        1 |
+|  7 | C007 | Dewi Gyat   | P    | Jakarta   | 1988-12-01 | giyat@gmail.com  |        1 |
++----+------+-------------+------+-----------+------------+------------------+----------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]> select kode, nama, tmp_lahir, tgl_lahir from pelanggan order by tgl_lahir desc;
++------+---------------+------------+------------+
+| kode | nama          | tmp_lahir  | tgl_lahir  |
++------+---------------+------------+------------+
+| C001 | Agung Sedayu  | Solo       | 2010-01-01 |
+| C009 | Ahmad Hasan   | Surabaya   | 1992-10-15 |
+| C010 | Cassanndra    | Belfast    | 1990-11-20 |
+| C008 | Andre Haru    | Surabaya   | 1990-07-15 |
+| C007 | Dewi Gyat     | Jakarta    | 1988-12-01 |
+| C006 | Gayatri Dwi   | Jakarta    | 1987-11-28 |
+| C005 | Pradabashu    | Pati       | 1985-04-02 |
+| C003 | Sekar Mirah   | Kediri     | 1983-02-20 |
+| C004 | Swandaru Geni | Kediri     | 1981-01-04 |
+| C002 | Pandan Wangi  | Yogyakarta | 1950-01-01 |
++------+---------------+------------+------------+
+10 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]> select * from produk where stok=3 or stok=10;
++----+------+-----------------+------------+------------+------+----------+-----------------+
+| id | kode | nama            | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+-----------------+------------+------------+------+----------+-----------------+
+|  6 | PC01 | PC Desktop HP   |    7000000 |    9600000 |    3 |        2 |               5 |
+|  9 | LN01 | Notebook Lenovo |    9000000 |   12000000 |    3 |        2 |               5 |
++----+------+-----------------+------------+------------+------+----------+-----------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]> SELECT * FROM produk WHERE harga_jual < 5000000 AND harga_jual > 500000;
++----+------+----------------+------------+------------+------+----------+-----------------+
+| id | kode | nama           | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+----------------+------------+------------+------+----------+-----------------+
+|  3 | K001 | Kulkas 2 pintu |    3500000 |    4867200 |    0 |        2 |               1 |
+|  4 | M001 | Meja Makan     |     500000 |     660000 |    6 |        3 |               2 |
++----+------+----------------+------------+------------+------+----------+-----------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]> SELECT * FROM produk WHERE min_stok > stok;
++----+------+----------------+------------+------------+------+----------+-----------------+
+| id | kode | nama           | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+----------------+------------+------------+------+----------+-----------------+
+|  3 | K001 | Kulkas 2 pintu |    3500000 |    4867200 |    0 |        2 |               1 |
+|  5 | TK01 | Teh Kotak      |       3000 |       4235 |    0 |       10 |               4 |
+|  8 | AC01 | Notebook Acer  |    8000000 |   10800000 |    1 |        2 |               5 |
++----+------+----------------+------------+------------+------+----------+-----------------+
+3 rows in set (0.000 sec)
+
+MariaDB [dbpossi02]> SELECT * FROM pelanggan ORDER BY tgl_lahir DESC;
++----+------+---------------+------+------------+------------+----------------------+----------+
+| id | kode | nama          | jk   | tmp_lahir  | tgl_lahir  | email                | kartu_id |
++----+------+---------------+------+------------+------------+----------------------+----------+
+|  1 | C001 | Agung Sedayu  | L    | Solo       | 2010-01-01 | sedayu@gmail.com     |        1 |
+|  9 | C009 | Ahmad Hasan   | L    | Surabaya   | 1992-10-15 | ahasan@gmail.com     |        4 |
+| 10 | C010 | Cassanndra    | P    | Belfast    | 1990-11-20 | casa90@gmail.com     |        1 |
+|  8 | C008 | Andre Haru    | L    | Surabaya   | 1990-07-15 | andre.haru@gmail.com |        4 |
+|  7 | C007 | Dewi Gyat     | P    | Jakarta    | 1988-12-01 | giyat@gmail.com      |        1 |
+|  6 | C006 | Gayatri Dwi   | P    | Jakarta    | 1987-11-28 | gaya87@gmail.com     |        1 |
+|  5 | C005 | Pradabashu    | L    | Pati       | 1985-04-02 | prada85@gmail.com    |        2 |
+|  3 | C003 | Sekar Mirah   | P    | Kediri     | 1983-02-20 | mirah@yahoo.com      |        1 |
+|  4 | C004 | Swandaru Geni | L    | Kediri     | 1981-01-04 | swandaru@yahoo.com   |        4 |
+|  2 | C002 | Pandan Wangi  | P    | Yogyakarta | 1950-01-01 | wangi@gmail.com      |        2 |
++----+------+---------------+------+------------+------------+----------------------+----------+
+10 rows in set (0.000 sec)
+
+MariaDB [dbpossi02]> SELECT * FROM pelanggan WHERE tmp_lahir='jakarta' AND jk='P';
++----+------+-------------+------+-----------+------------+------------------+----------+
+| id | kode | nama        | jk   | tmp_lahir | tgl_lahir  | email            | kartu_id |
++----+------+-------------+------+-----------+------------+------------------+----------+
+|  6 | C006 | Gayatri Dwi | P    | Jakarta   | 1987-11-28 | gaya87@gmail.com |        1 |
+|  7 | C007 | Dewi Gyat   | P    | Jakarta   | 1988-12-01 | giyat@gmail.com  |        1 |
++----+------+-------------+------+-----------+------------+------------------+----------+
+2 rows in set (0.000 sec)
+
+MariaDB [dbpossi02]> SELECT * from pelanggan WHERE id IN (2,4,6);
++----+------+---------------+------+------------+------------+--------------------+----------+
+| id | kode | nama          | jk   | tmp_lahir  | tgl_lahir  | email              | kartu_id |
++----+------+---------------+------+------------+------------+--------------------+----------+
+|  2 | C002 | Pandan Wangi  | P    | Yogyakarta | 1950-01-01 | wangi@gmail.com    |        2 |
+|  4 | C004 | Swandaru Geni | L    | Kediri     | 1981-01-04 | swandaru@yahoo.com |        4 |
+|  6 | C006 | Gayatri Dwi   | P    | Jakarta    | 1987-11-28 | gaya87@gmail.com   |        1 |
++----+------+---------------+------+------------+------------+--------------------+----------+
+3 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]> SELECT * FROM produk WHERE harga_jual >= 500000 AND harga_jual<= 6000000;
++----+------+------------------+------------+------------+------+----------+-----------------+
+| id | kode | nama             | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+------------------+------------+------------+------+----------+-----------------+
+|  1 | TV01 | Televisi 21 inch |    3500000 |    5241600 | NULL |        2 |               1 |
+|  3 | K001 | Kulkas 2 pintu   |    3500000 |    4867200 |    0 |        2 |               1 |
+|  4 | M001 | Meja Makan       |     500000 |     660000 |    6 |        3 |               2 |
++----+------+------------------+------------+------------+------+----------+-----------------+
+3 rows in set (0.000 sec)
+
+MariaDB [dbpossi02]> SELECT * FROM produk WHERE kode LIKE 'K%' OR kode LIKE 'M%';
++----+------+----------------+------------+------------+------+----------+-----------------+
+| id | kode | nama           | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+----------------+------------+------------+------+----------+-----------------+
+|  3 | K001 | Kulkas 2 pintu |    3500000 |    4867200 |    0 |        2 |               1 |
+|  4 | M001 | Meja Makan     |     500000 |     660000 |    6 |        3 |               2 |
++----+------+----------------+------------+------------+------+----------+-----------------+
+2 rows in set (0.000 sec)
+
+MariaDB [dbpossi02]> select from produk where kode not like 'M%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'from produk where kode not like 'M%'' at line 1
+MariaDB [dbpossi02]> select * from produk where kode not like 'M%';
++----+------+------------------+------------+------------+------+----------+-----------------+
+| id | kode | nama             | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+------------------+------------+------------+------+----------+-----------------+
+|  1 | TV01 | Televisi 21 inch |    3500000 |    5241600 | NULL |        2 |               1 |
+|  2 | TV02 | Televisi 40 inch |    5500000 |    7737600 |    5 |        2 |               1 |
+|  3 | K001 | Kulkas 2 pintu   |    3500000 |    4867200 |    0 |        2 |               1 |
+|  5 | TK01 | Teh Kotak        |       3000 |       4235 |    0 |       10 |               4 |
+|  6 | PC01 | PC Desktop HP    |    7000000 |    9600000 |    3 |        2 |               5 |
+|  7 | TB01 | Teh Botol        |       2000 |       3025 |   39 |       10 |               4 |
+|  8 | AC01 | Notebook Acer    |    8000000 |   10800000 |    1 |        2 |               5 |
+|  9 | LN01 | Notebook Lenovo  |    9000000 |   12000000 |    3 |        2 |               5 |
++----+------+------------------+------------+------------+------+----------+-----------------+
+8 rows in set (0.000 sec)
+
+MariaDB [dbpossi02]> select * from produk where nama like 'Televisi%';
++----+------+------------------+------------+------------+------+----------+-----------------+
+| id | kode | nama             | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+------------------+------------+------------+------+----------+-----------------+
+|  1 | TV01 | Televisi 21 inch |    3500000 |    5241600 | NULL |        2 |               1 |
+|  2 | TV02 | Televisi 40 inch |    5500000 |    7737600 |    5 |        2 |               1 |
++----+------+------------------+------------+------------+------+----------+-----------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]> MariaDB [dbpossi02]> SELECT * FROM pelanggan where nama like 'SA%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'MariaDB [dbpossi02]> SELECT * FROM pelanggan where nama like 'SA%'' at line 1
+MariaDB [dbpossi02]> SELECT * FROM pelanggan where nama like 'SA%';
+Empty set (0.000 sec)
+
+MariaDB [dbpossi02]>
+MariaDB [dbpossi02]> SELECT * FROM pelanggan where nama like 'S%' or like 'A%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'like 'A%'' at line 1
+MariaDB [dbpossi02]> SELECT * FROM pelanggan where nama like 'S%' or nama like 'A%';
++----+------+---------------+------+-----------+------------+----------------------+----------+
+| id | kode | nama          | jk   | tmp_lahir | tgl_lahir  | email                | kartu_id |
++----+------+---------------+------+-----------+------------+----------------------+----------+
+|  1 | C001 | Agung Sedayu  | L    | Solo      | 2010-01-01 | sedayu@gmail.com     |        1 |
+|  3 | C003 | Sekar Mirah   | P    | Kediri    | 1983-02-20 | mirah@yahoo.com      |        1 |
+|  4 | C004 | Swandaru Geni | L    | Kediri    | 1981-01-04 | swandaru@yahoo.com   |        4 |
+|  8 | C008 | Andre Haru    | L    | Surabaya  | 1990-07-15 | andre.haru@gmail.com |        4 |
+|  9 | C009 | Ahmad Hasan   | L    | Surabaya  | 1992-10-15 | ahasan@gmail.com     |        4 |
++----+------+---------------+------+-----------+------------+----------------------+----------+
+5 rows in set (0.000 sec)
+
+MariaDB [dbpossi02]> SELECT * FROM pelanggan where nama like 'sa%';
+Empty set (0.000 sec)
+
+MariaDB [dbpossi02]> SELECT * FROM pelanggan where tmp_lahir like 'yo%';
++----+------+--------------+------+------------+------------+-----------------+----------+
+| id | kode | nama         | jk   | tmp_lahir  | tgl_lahir  | email           | kartu_id |
++----+------+--------------+------+------------+------------+-----------------+----------+
+|  2 | C002 | Pandan Wangi | P    | Yogyakarta | 1950-01-01 | wangi@gmail.com |        2 |
++----+------+--------------+------+------------+------------+-----------------+----------+
+1 row in set (0.000 sec)
+
+MariaDB [dbpossi02]> select * from pelanggan where nama like '_A%';
++----+------+--------------+------+------------+------------+------------------+----------+
+| id | kode | nama         | jk   | tmp_lahir  | tgl_lahir  | email            | kartu_id |
++----+------+--------------+------+------------+------------+------------------+----------+
+|  2 | C002 | Pandan Wangi | P    | Yogyakarta | 1950-01-01 | wangi@gmail.com  |        2 |
+|  6 | C006 | Gayatri Dwi  | P    | Jakarta    | 1987-11-28 | gaya87@gmail.com |        1 |
+| 10 | C010 | Cassanndra   | P    | Belfast    | 1990-11-20 | casa90@gmail.com |        1 |
++----+------+--------------+------+------------+------------+------------------+----------+
+3 rows in set (0.000 sec)
+
+MariaDB [dbpossi02]>
+MariaDB [dbpossi02]> SELECT *FROM produk ORDER BY harga_beli DESC LIMIT 2;
++----+------+-----------------+------------+------------+------+----------+-----------------+
+| id | kode | nama            | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+-----------------+------------+------------+------+----------+-----------------+
+|  9 | LN01 | Notebook Lenovo |    9000000 |   12000000 |    3 |        2 |               5 |
+|  8 | AC01 | Notebook Acer   |    8000000 |   10800000 |    1 |        2 |               5 |
++----+------+-----------------+------------+------------+------+----------+-----------------+
+2 rows in set (0.000 sec)
+
+MariaDB [dbpossi02]> SELECT *FROM produk ORDER BY harga_beli asc LIMIT 1;
++----+------+-----------+------------+------------+------+----------+-----------------+
+| id | kode | nama      | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+-----------+------------+------------+------+----------+-----------------+
+|  7 | TB01 | Teh Botol |       2000 |       3025 |   39 |       10 |               4 |
++----+------+-----------+------------+------------+------+----------+-----------------+
+1 row in set (0.000 sec)
+
+MariaDB [dbpossi02]> SELECT *FROM produk ORDER BY stok desc LIMIT 1;
++----+------+-----------+------------+------------+------+----------+-----------------+
+| id | kode | nama      | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+-----------+------------+------------+------+----------+-----------------+
+|  7 | TB01 | Teh Botol |       2000 |       3025 |   39 |       10 |               4 |
++----+------+-----------+------------+------------+------+----------+-----------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbpossi02]> SELECT *FROM produk ORDER BY stok asc LIMIT 1;
++----+------+------------------+------------+------------+------+----------+-----------------+
+| id | kode | nama             | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+------------------+------------+------------+------+----------+-----------------+
+|  1 | TV01 | Televisi 21 inch |    3500000 |    5241600 | NULL |        2 |               1 |
++----+------+------------------+------------+------------+------+----------+-----------------+
+1 row in set (0.000 sec)
+
+MariaDB [dbpossi02]> select * from pelanggan;
++----+------+---------------+------+------------+------------+----------------------+----------+
+| id | kode | nama          | jk   | tmp_lahir  | tgl_lahir  | email                | kartu_id |
++----+------+---------------+------+------------+------------+----------------------+----------+
+|  1 | C001 | Agung Sedayu  | L    | Solo       | 2010-01-01 | sedayu@gmail.com     |        1 |
+|  2 | C002 | Pandan Wangi  | P    | Yogyakarta | 1950-01-01 | wangi@gmail.com      |        2 |
+|  3 | C003 | Sekar Mirah   | P    | Kediri     | 1983-02-20 | mirah@yahoo.com      |        1 |
+|  4 | C004 | Swandaru Geni | L    | Kediri     | 1981-01-04 | swandaru@yahoo.com   |        4 |
+|  5 | C005 | Pradabashu    | L    | Pati       | 1985-04-02 | prada85@gmail.com    |        2 |
+|  6 | C006 | Gayatri Dwi   | P    | Jakarta    | 1987-11-28 | gaya87@gmail.com     |        1 |
+|  7 | C007 | Dewi Gyat     | P    | Jakarta    | 1988-12-01 | giyat@gmail.com      |        1 |
+|  8 | C008 | Andre Haru    | L    | Surabaya   | 1990-07-15 | andre.haru@gmail.com |        4 |
+|  9 | C009 | Ahmad Hasan   | L    | Surabaya   | 1992-10-15 | ahasan@gmail.com     |        4 |
+| 10 | C010 | Cassanndra    | P    | Belfast    | 1990-11-20 | casa90@gmail.com     |        1 |
++----+------+---------------+------+------------+------------+----------------------+----------+
+10 rows in set (0.000 sec)
+
+MariaDB [dbpossi02]> select * from pelanggan order by tgl_lahir asc limit 1;
++----+------+--------------+------+------------+------------+-----------------+----------+
+| id | kode | nama         | jk   | tmp_lahir  | tgl_lahir  | email           | kartu_id |
++----+------+--------------+------+------------+------------+-----------------+----------+
+|  2 | C002 | Pandan Wangi | P    | Yogyakarta | 1950-01-01 | wangi@gmail.com |        2 |
++----+------+--------------+------+------------+------------+-----------------+----------+
+1 row in set (0.000 sec)
+
+MariaDB [dbpossi02]> select * from pelanggan order by tgl_lahir desc limit 1;
++----+------+--------------+------+-----------+------------+------------------+----------+
+| id | kode | nama         | jk   | tmp_lahir | tgl_lahir  | email            | kartu_id |
++----+------+--------------+------+-----------+------------+------------------+----------+
+|  1 | C001 | Agung Sedayu | L    | Solo      | 2010-01-01 | sedayu@gmail.com |        1 |
++----+------+--------------+------+-----------+------------+------------------+----------+
+1 row in set (0.000 sec)
+
+MariaDB [dbpossi02]>
