@@ -1,0 +1,408 @@
+
+Setting environment for using XAMPP for Windows.
+Mamad@ASUS-MAMAD c:\xampp
+# cd mysql
+
+Mamad@ASUS-MAMAD c:\xampp\mysql
+# cd bin
+
+Mamad@ASUS-MAMAD c:\xampp\mysql\bin
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use dbpossi02
+Database changed
+MariaDB [dbpossi02]> SELECT * FROM produk WHERE harga_beli * stok > 20000000;
++----+------+------------------+------------+------------+------+----------+-----------------+
+| id | kode | nama             | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+------------------+------------+------------+------+----------+-----------------+
+|  2 | TV02 | Televisi 40 inch |    5500000 |    7737600 |    5 |        2 |               1 |
+|  6 | PC01 | PC Desktop HP    |    7000000 |    9600000 |    3 |        2 |               5 |
+|  9 | LN01 | Notebook Lenovo  |    9000000 |   12000000 |    3 |        2 |               5 |
++----+------+------------------+------------+------------+------+----------+-----------------+
+3 rows in set (0.204 sec)
+
+MariaDB [dbpossi02]> SELECT SUM(stok - min_stok) as selisih from produk;
++---------+
+| selisih |
++---------+
+|      24 |
++---------+
+1 row in set (0.005 sec)
+
+MariaDB [dbpossi02]> SELECT sum(stok) as total_asset from produk;
++-------------+
+| total_asset |
++-------------+
+|          57 |
++-------------+
+1 row in set (0.000 sec)
+
+MariaDB [dbpossi02]> SELECT * FROM pelanggan WHERE YEAR(tgl_lahir) BETWEEN 1999 AND 2004;
+Empty set (0.007 sec)
+
+MariaDB [dbpossi02]> SELECT * FROM pelanggan WHERE YEAR(tgl_lahir)=1998;
+Empty set (0.001 sec)
+
+MariaDB [dbpossi02]> SELECT * FROM pelanggan WHERE MONTH(tgl_lahir)=08;
+Empty set (0.002 sec)
+
+MariaDB [dbpossi02]> SELECT nama, tmp_lahir, tgl_lahir, (YEAR(NOW())-YEAR(tgl_lahir)) AS umur FROM pelanggan;
++---------------+------------+------------+------+
+| nama          | tmp_lahir  | tgl_lahir  | umur |
++---------------+------------+------------+------+
+| Agung Sedayu  | Solo       | 2010-01-01 |   14 |
+| Pandan Wangi  | Yogyakarta | 1950-01-01 |   74 |
+| Sekar Mirah   | Kediri     | 1983-02-20 |   41 |
+| Swandaru Geni | Kediri     | 1981-01-04 |   43 |
+| Pradabashu    | Pati       | 1985-04-02 |   39 |
+| Gayatri Dwi   | Jakarta    | 1987-11-28 |   37 |
+| Dewi Gyat     | Jakarta    | 1988-12-01 |   36 |
+| Andre Haru    | Surabaya   | 1990-07-15 |   34 |
+| Ahmad Hasan   | Surabaya   | 1992-10-15 |   32 |
+| Cassanndra    | Belfast    | 1990-11-20 |   34 |
++---------------+------------+------------+------+
+10 rows in set (0.002 sec)
+
+MariaDB [dbpossi02]> select * from pelanggan where tmp_lahir='Jakarta' and jk='P';
++----+------+-------------+------+-----------+------------+------------------+----------+
+| id | kode | nama        | jk   | tmp_lahir | tgl_lahir  | email            | kartu_id |
++----+------+-------------+------+-----------+------------+------------------+----------+
+|  6 | C006 | Gayatri Dwi | P    | Jakarta   | 1987-11-28 | gaya87@gmail.com |        1 |
+|  7 | C007 | Dewi Gyat   | P    | Jakarta   | 1988-12-01 | giyat@gmail.com  |        1 |
++----+------+-------------+------+-----------+------------+------------------+----------+
+2 rows in set (0.004 sec)
+
+MariaDB [dbpossi02]> select * from produk;
++----+------+------------------+------------+------------+------+----------+-----------------+
+| id | kode | nama             | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+------------------+------------+------------+------+----------+-----------------+
+|  1 | TV01 | Televisi 21 inch |    3500000 |    5241600 | NULL |        2 |               1 |
+|  2 | TV02 | Televisi 40 inch |    5500000 |    7737600 |    5 |        2 |               1 |
+|  3 | K001 | Kulkas 2 pintu   |    3500000 |    4867200 |    0 |        2 |               1 |
+|  4 | M001 | Meja Makan       |     500000 |     660000 |    6 |        3 |               2 |
+|  5 | TK01 | Teh Kotak        |       3000 |       4235 |    0 |       10 |               4 |
+|  6 | PC01 | PC Desktop HP    |    7000000 |    9600000 |    3 |        2 |               5 |
+|  7 | TB01 | Teh Botol        |       2000 |       3025 |   39 |       10 |               4 |
+|  8 | AC01 | Notebook Acer    |    8000000 |   10800000 |    1 |        2 |               5 |
+|  9 | LN01 | Notebook Lenovo  |    9000000 |   12000000 |    3 |        2 |               5 |
++----+------+------------------+------------+------------+------+----------+-----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [dbpossi02]> select * from produk where harga_jual<10000;
++----+------+-----------+------------+------------+------+----------+-----------------+
+| id | kode | nama      | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+-----------+------------+------------+------+----------+-----------------+
+|  5 | TK01 | Teh Kotak |       3000 |       4235 |    0 |       10 |               4 |
+|  7 | TB01 | Teh Botol |       2000 |       3025 |   39 |       10 |               4 |
++----+------+-----------+------------+------------+------+----------+-----------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]> SELECT SUM(stok) AS total_stok
+    -> FROM produk
+    -> WHERE harga_jual < 10000;
++------------+
+| total_stok |
++------------+
+|         39 |
++------------+
+1 row in set (0.000 sec)
+
+MariaDB [dbpossi02]> select count(*) as jumlah produk from produk where kode_produk like 'K%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'produk from produk where kode_produk like 'K%'' at line 1
+MariaDB [dbpossi02]> select count(*) as jumlah_produk from produk where kode_produk like 'K%';
+ERROR 1054 (42S22): Unknown column 'kode_produk' in 'where clause'
+MariaDB [dbpossi02]> select count(*) as jumlah_produk from produk nama like 'K%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'like 'K%'' at line 1
+MariaDB [dbpossi02]> select count(*) as jumlah_produk from produk nama like 'k]%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'like 'k]%'' at line 1
+MariaDB [dbpossi02]> select count(*) as jumlah_produk from produk nama like 'k%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'like 'k%'' at line 1
+MariaDB [dbpossi02]> select count(*) as jumlah_produk from produk where nama like 'k%';
++---------------+
+| jumlah_produk |
++---------------+
+|             1 |
++---------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbpossi02]> select average (*) as harga_jual_rata-rata from produk where harga_jual > 1000000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '*) as harga_jual_rata-rata from produk where harga_jual > 1000000' at line 1
+MariaDB [dbpossi02]> select avg(*) as harga_jual_rata-rata from produk where harga_jual > 1000000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '*) as harga_jual_rata-rata from produk where harga_jual > 1000000' at line 1
+MariaDB [dbpossi02]> SELECT AVG(harga_jual) AS harga_jual_rata_rata
+    -> FROM produk
+    -> WHERE harga_jual > 1000000;
++----------------------+
+| harga_jual_rata_rata |
++----------------------+
+|              8374400 |
++----------------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbpossi02]> select * from produk order by stok desc limit 1;
++----+------+-----------+------------+------------+------+----------+-----------------+
+| id | kode | nama      | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+-----------+------------+------------+------+----------+-----------------+
+|  7 | TB01 | Teh Botol |       2000 |       3025 |   39 |       10 |               4 |
++----+------+-----------+------------+------------+------+----------+-----------------+
+1 row in set (0.002 sec)
+
+MariaDB [dbpossi02]> select count(*) as jumlah_produk from produk where stok < min_stok;
++---------------+
+| jumlah_produk |
++---------------+
+|             3 |
++---------------+
+1 row in set (0.000 sec)
+
+MariaDB [dbpossi02]> select sum (harga_beli * stok) as total_aset from produk;
+ERROR 1630 (42000): FUNCTION dbpossi02.sum does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+MariaDB [dbpossi02]> select sum(harga_beli * stok) as total_aset from produk;
++------------+
+| total_aset |
++------------+
+|   86578000 |
++------------+
+1 row in set (0.000 sec)
+
+MariaDB [dbpossi02]> select id, nama, stok, case when stok <= min_stok then 'segera belanja' else 'stok aman' end as status_stok from produk;
++----+------------------+------+----------------+
+| id | nama             | stok | status_stok    |
++----+------------------+------+----------------+
+|  1 | Televisi 21 inch | NULL | stok aman      |
+|  2 | Televisi 40 inch |    5 | stok aman      |
+|  3 | Kulkas 2 pintu   |    0 | segera belanja |
+|  4 | Meja Makan       |    6 | stok aman      |
+|  5 | Teh Kotak        |    0 | segera belanja |
+|  6 | PC Desktop HP    |    3 | stok aman      |
+|  7 | Teh Botol        |   39 | stok aman      |
+|  8 | Notebook Acer    |    1 | segera belanja |
+|  9 | Notebook Lenovo  |    3 | stok aman      |
++----+------------------+------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [dbpossi02]> select id, nama, umur, case when umur < 17 then 'Muda' when umur between 17 and 55 then 'Dewasa' else 'Tua' end as kategori_umur from pelanggan;
+ERROR 1054 (42S22): Unknown column 'umur' in 'field list'
+MariaDB [dbpossi02]> select * from pelanggan;
++----+------+---------------+------+------------+------------+----------------------+----------+
+| id | kode | nama          | jk   | tmp_lahir  | tgl_lahir  | email                | kartu_id |
++----+------+---------------+------+------------+------------+----------------------+----------+
+|  1 | C001 | Agung Sedayu  | L    | Solo       | 2010-01-01 | sedayu@gmail.com     |        1 |
+|  2 | C002 | Pandan Wangi  | P    | Yogyakarta | 1950-01-01 | wangi@gmail.com      |        2 |
+|  3 | C003 | Sekar Mirah   | P    | Kediri     | 1983-02-20 | mirah@yahoo.com      |        1 |
+|  4 | C004 | Swandaru Geni | L    | Kediri     | 1981-01-04 | swandaru@yahoo.com   |        4 |
+|  5 | C005 | Pradabashu    | L    | Pati       | 1985-04-02 | prada85@gmail.com    |        2 |
+|  6 | C006 | Gayatri Dwi   | P    | Jakarta    | 1987-11-28 | gaya87@gmail.com     |        1 |
+|  7 | C007 | Dewi Gyat     | P    | Jakarta    | 1988-12-01 | giyat@gmail.com      |        1 |
+|  8 | C008 | Andre Haru    | L    | Surabaya   | 1990-07-15 | andre.haru@gmail.com |        4 |
+|  9 | C009 | Ahmad Hasan   | L    | Surabaya   | 1992-10-15 | ahasan@gmail.com     |        4 |
+| 10 | C010 | Cassanndra    | P    | Belfast    | 1990-11-20 | casa90@gmail.com     |        1 |
++----+------+---------------+------+------------+------------+----------------------+----------+
+10 rows in set (0.000 sec)
+
+MariaDB [dbpossi02]> SELECT id, nama,
+    ->        YEAR(CURDATE()) - YEAR(tgl_lahir) AS umur,
+    ->        CASE
+    ->            WHEN YEAR(CURDATE()) - YEAR(tgl_lahir) < 17 THEN 'Muda'
+    ->            WHEN YEAR(CURDATE()) - YEAR(tgl_lahir) BETWEEN 17 AND 55 THEN 'Dewasa'
+    ->            ELSE 'Tua'
+    ->        END AS kategori_umur
+    -> FROM pelanggan;
++----+---------------+------+---------------+
+| id | nama          | umur | kategori_umur |
++----+---------------+------+---------------+
+|  1 | Agung Sedayu  |   14 | Muda          |
+|  2 | Pandan Wangi  |   74 | Tua           |
+|  3 | Sekar Mirah   |   41 | Dewasa        |
+|  4 | Swandaru Geni |   43 | Dewasa        |
+|  5 | Pradabashu    |   39 | Dewasa        |
+|  6 | Gayatri Dwi   |   37 | Dewasa        |
+|  7 | Dewi Gyat     |   36 | Dewasa        |
+|  8 | Andre Haru    |   34 | Dewasa        |
+|  9 | Ahmad Hasan   |   32 | Dewasa        |
+| 10 | Cassanndra    |   34 | Dewasa        |
++----+---------------+------+---------------+
+10 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]> SELECT id, nama,
+    ->        YEAR(CURDATE()) - YEAR(tgl_lahir) AS umur,
+    ->        IF(
+    ->            YEAR(CURDATE()) - YEAR(tgl_lahir) < 17,
+    ->            'Muda',
+    ->            IF(
+    ->                YEAR(CURDATE()) - YEAR(tgl_lahir) BETWEEN 17 AND 55,
+    ->                'Dewasa',
+    ->                'Tua'
+    ->            )
+    ->        ) AS kategori_umur
+    -> FROM pelanggan;
++----+---------------+------+---------------+
+| id | nama          | umur | kategori_umur |
++----+---------------+------+---------------+
+|  1 | Agung Sedayu  |   14 | Muda          |
+|  2 | Pandan Wangi  |   74 | Tua           |
+|  3 | Sekar Mirah   |   41 | Dewasa        |
+|  4 | Swandaru Geni |   43 | Dewasa        |
+|  5 | Pradabashu    |   39 | Dewasa        |
+|  6 | Gayatri Dwi   |   37 | Dewasa        |
+|  7 | Dewi Gyat     |   36 | Dewasa        |
+|  8 | Andre Haru    |   34 | Dewasa        |
+|  9 | Ahmad Hasan   |   32 | Dewasa        |
+| 10 | Cassanndra    |   34 | Dewasa        |
++----+---------------+------+---------------+
+10 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]> select * from produk;
++----+------+------------------+------------+------------+------+----------+-----------------+
+| id | kode | nama             | harga_beli | harga_jual | stok | min_stok | jenis_produk_id |
++----+------+------------------+------------+------------+------+----------+-----------------+
+|  1 | TV01 | Televisi 21 inch |    3500000 |    5241600 | NULL |        2 |               1 |
+|  2 | TV02 | Televisi 40 inch |    5500000 |    7737600 |    5 |        2 |               1 |
+|  3 | K001 | Kulkas 2 pintu   |    3500000 |    4867200 |    0 |        2 |               1 |
+|  4 | M001 | Meja Makan       |     500000 |     660000 |    6 |        3 |               2 |
+|  5 | TK01 | Teh Kotak        |       3000 |       4235 |    0 |       10 |               4 |
+|  6 | PC01 | PC Desktop HP    |    7000000 |    9600000 |    3 |        2 |               5 |
+|  7 | TB01 | Teh Botol        |       2000 |       3025 |   39 |       10 |               4 |
+|  8 | AC01 | Notebook Acer    |    8000000 |   10800000 |    1 |        2 |               5 |
+|  9 | LN01 | Notebook Lenovo  |    9000000 |   12000000 |    3 |        2 |               5 |
++----+------+------------------+------------+------------+------+----------+-----------------+
+9 rows in set (0.000 sec)
+
+MariaDB [dbpossi02]> SELECT id, kode, nama,
+    ->        CASE
+    ->            WHEN kode = 'TV01' THEN 'DVD Player'
+    ->            WHEN kode = 'K001' THEN 'Rice Cooker'
+    ->            ELSE 'Tidak Ada'
+    ->        END AS bonus
+    -> FROM produk;
++----+------+------------------+-------------+
+| id | kode | nama             | bonus       |
++----+------+------------------+-------------+
+|  1 | TV01 | Televisi 21 inch | DVD Player  |
+|  2 | TV02 | Televisi 40 inch | Tidak Ada   |
+|  3 | K001 | Kulkas 2 pintu   | Rice Cooker |
+|  4 | M001 | Meja Makan       | Tidak Ada   |
+|  5 | TK01 | Teh Kotak        | Tidak Ada   |
+|  6 | PC01 | PC Desktop HP    | Tidak Ada   |
+|  7 | TB01 | Teh Botol        | Tidak Ada   |
+|  8 | AC01 | Notebook Acer    | Tidak Ada   |
+|  9 | LN01 | Notebook Lenovo  | Tidak Ada   |
++----+------+------------------+-------------+
+9 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]> SELECT tmp_lahir, COUNT(*) AS jumlah_pelanggan
+    -> FROM pelanggan
+    -> GROUP BY tmp_lahir;
++------------+------------------+
+| tmp_lahir  | jumlah_pelanggan |
++------------+------------------+
+| Belfast    |                1 |
+| Jakarta    |                2 |
+| Kediri     |                2 |
+| Pati       |                1 |
+| Solo       |                1 |
+| Surabaya   |                2 |
+| Yogyakarta |                1 |
++------------+------------------+
+7 rows in set (0.003 sec)
+
+MariaDB [dbpossi02]> SELECT jenis_produk_id, COUNT(*) AS jumlah_produk
+    -> FROM produk
+    -> GROUP BY jenis_produk_id;
++-----------------+---------------+
+| jenis_produk_id | jumlah_produk |
++-----------------+---------------+
+|               1 |             3 |
+|               2 |             1 |
+|               4 |             2 |
+|               5 |             3 |
++-----------------+---------------+
+4 rows in set (0.003 sec)
+
+MariaDB [dbpossi02]> SELECT *
+    -> FROM pelanggan
+    -> WHERE YEAR(CURDATE()) - YEAR(tgl_lahir) < (
+    ->     SELECT AVG(YEAR(CURDATE()) - YEAR(tgl_lahir))
+    ->     FROM pelanggan
+    -> );
++----+------+--------------+------+-----------+------------+----------------------+----------+
+| id | kode | nama         | jk   | tmp_lahir | tgl_lahir  | email                | kartu_id |
++----+------+--------------+------+-----------+------------+----------------------+----------+
+|  1 | C001 | Agung Sedayu | L    | Solo      | 2010-01-01 | sedayu@gmail.com     |        1 |
+|  6 | C006 | Gayatri Dwi  | P    | Jakarta   | 1987-11-28 | gaya87@gmail.com     |        1 |
+|  7 | C007 | Dewi Gyat    | P    | Jakarta   | 1988-12-01 | giyat@gmail.com      |        1 |
+|  8 | C008 | Andre Haru   | L    | Surabaya  | 1990-07-15 | andre.haru@gmail.com |        4 |
+|  9 | C009 | Ahmad Hasan  | L    | Surabaya  | 1992-10-15 | ahasan@gmail.com     |        4 |
+| 10 | C010 | Cassanndra   | P    | Belfast   | 1990-11-20 | casa90@gmail.com     |        1 |
++----+------+--------------+------+-----------+------------+----------------------+----------+
+6 rows in set (0.003 sec)
+
+MariaDB [dbpossi02]> SELECT p.*
+    -> FROM pelanggan p
+    -> JOIN kartu k ON p.kartu_id = k.id
+    -> WHERE k.iuran_tahunan > 90000;
+ERROR 1054 (42S22): Unknown column 'k.iuran_tahunan' in 'where clause'
+MariaDB [dbpossi02]> SELECT *,
+    ->        AVG(harga_jual) OVER() AS rata_rata_harga
+    -> FROM produk
+    -> WHERE harga_jual < (
+    ->     SELECT AVG(harga_jual)
+    ->     FROM produk
+    -> );
++------+------+------------------+------------+------------+------+----------+-----------------+-----------------+
+| id   | kode | nama             | harga_beli | harga_jual | stok | min_stok | jenis_produk_id | rata_rata_harga |
++------+------+------------------+------------+------------+------+----------+-----------------+-----------------+
+|    7 | TB01 | Teh Botol        |       2000 |       3025 |   39 |       10 |               4 |         2155212 |
+|    5 | TK01 | Teh Kotak        |       3000 |       4235 |    0 |       10 |               4 |         2155212 |
+|    4 | M001 | Meja Makan       |     500000 |     660000 |    6 |        3 |               2 |         2155212 |
+|    3 | K001 | Kulkas 2 pintu   |    3500000 |    4867200 |    0 |        2 |               1 |         2155212 |
+|    1 | TV01 | Televisi 21 inch |    3500000 |    5241600 | NULL |        2 |               1 |         2155212 |
++------+------+------------------+------------+------------+------+----------+-----------------+-----------------+
+5 rows in set (0.004 sec)
+
+MariaDB [dbpossi02]> SELECT p.*
+    -> FROM pelanggan p
+    -> JOIN kartu k ON p.kartu_id = k.id
+    -> WHERE k.diskon > 3;
+Empty set (0.003 sec)
+
+MariaDB [dbpossi02]> SELECT p.id,
+    ->     ->        p.nama,
+    ->     ->        k.kode,
+    ->     ->        k.iuran
+    ->     -> FROM pelanggan p
+    ->     -> JOIN kartu k ON p.kartu_id = k.id
+    ->     -> WHERE k.iuran > 90000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>        p.nama,
+    ->        k.kode,
+    ->        k.iuran
+    -> FROM pela...' at line 2
+MariaDB [dbpossi02]> select p.id,
+    -> p.nama,
+    -> k.kode,
+    -> k.iuran
+    -> from pelanggan p
+    -> join kartu k on p.kartu_id = k.id
+    -> where k.iuran>9000;
++----+--------------+------+--------+
+| id | nama         | kode | iuran  |
++----+--------------+------+--------+
+|  1 | Agung Sedayu | GOLD | 100000 |
+|  2 | Pandan Wangi | PLAT | 150000 |
+|  3 | Sekar Mirah  | GOLD | 100000 |
+|  5 | Pradabashu   | PLAT | 150000 |
+|  6 | Gayatri Dwi  | GOLD | 100000 |
+|  7 | Dewi Gyat    | GOLD | 100000 |
+| 10 | Cassanndra   | GOLD | 100000 |
++----+--------------+------+--------+
+7 rows in set (0.001 sec)
+
+MariaDB [dbpossi02]>
